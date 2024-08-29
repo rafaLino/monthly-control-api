@@ -1,5 +1,5 @@
 import * as repository from '../repository/index.mjs'
-import { getCurrentFormattedDate } from '../utils/index.mjs';
+import { getReferenceDate } from '../utils/index.mjs';
 
 /**
  * get register's 
@@ -12,7 +12,7 @@ import { getCurrentFormattedDate } from '../utils/index.mjs';
  */
 export async function get() {
 
-    const currentDate = getCurrentFormattedDate();
+    const currentDate = getReferenceDate();
 
     const result = await repository.get(currentDate);
 

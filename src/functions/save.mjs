@@ -1,5 +1,5 @@
 import * as repository from '../repository/index.mjs'
-import { getCurrentFormattedDate } from '../utils/index.mjs';
+import { getReferenceDate } from '../utils/index.mjs';
 import crypto from 'crypto';
 /**
  * save register's into database
@@ -14,7 +14,7 @@ export async function save(data) {
     if (!data)
         return { ok: false };
 
-    const currentDate = getCurrentFormattedDate();
+    const currentDate = getReferenceDate();
 
     const existedData = await repository.get(currentDate);
     const id = existedData ? existedData.id : crypto.randomUUID();

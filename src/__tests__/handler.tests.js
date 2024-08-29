@@ -6,7 +6,7 @@ jest.mock('../repository/index.mjs', () => ({
     get: jest.fn()
 }));
 const SECRET = 'myKey'
-describe('get registers', () => {
+describe('handler tests', () => {
     test('should get registers', async () => {
         const data = {
             id: '123', records: {
