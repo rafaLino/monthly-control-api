@@ -1,11 +1,11 @@
 {
-  "name": "monthly-control_lambdafunction",
+  "name": "monthly-control-api",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/index.mjs",
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watchAll",
-    "build": "cd src && zip -r monthly-control . -x '/__tests__/*'"
+    "bundle": "cd ./src && zip -qq -r ../bundle.zip ./ -x '/__tests__/*'"
   },
   "author": "lino",
   "license": "ISC",
