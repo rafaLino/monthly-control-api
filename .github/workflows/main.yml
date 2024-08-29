@@ -1,7 +1,7 @@
 name: deploy to lambda
-on: 
+on:
   push:
-    branches: 
+    branches:
       - main
 jobs:
   deploy_source:
@@ -11,26 +11,30 @@ jobs:
         node-version: [20.x]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
+
       - name: npm install and test
         run: |
           npm install
           npm run test
-        env:
-          CI: true
-      - name: zip
-        uses: montudor/action-zip@v0.1.0
-        with:
-          args: zip -qq -r ./bundle.zip ./
+
+      - name: Install zip
+        uses: montudor/action-zip@v1
+
+      - name: Bundle
+        run: npm run bundle
+
       - name: default deploy
-        uses: appleboy/lambda-action@master
+        uses: appleboy/lambda-action@v0.2.0
         with:
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws_region: us-east-2
+          aws_region: ${{ secrets.AWS_REGION }}
           function_name: monthlyControl
           zip_file: bundle.zip
