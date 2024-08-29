@@ -14,15 +14,24 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+          run_install: false
+
       - name: Install Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
+          cache: "pnpm"
 
-      - name: npm install and test
+      - name: pnpm install
         run: |
-          npm install
-          npm run test
+          pnpm install
+
+      - name: Run tests
+        run: npm run test
 
       - name: Install zip
         uses: montudor/action-zip@v1
