@@ -1,38 +1,26 @@
 import { AuthorizationFilter } from './filters/authorization.filters.mjs';
-import { get, save } from './functions/index.mjs';
+import extractHandler from './handlers/extract.mjs';
+import recordsHandler from './handlers/records.mjs';
 
 export const handler = (async (event) => {
     //console.log('Received event:', JSON.stringify(event, null, 2));
-
-    let body;
-    let statusCode = '200';
-    const headers = {
-        'Content-Type': 'application/json',
-    };
-
     event.httpMethod ??= event.requestContext.http.method;
+    event.path ??= event.requestContext.http.path;
     try {
         AuthorizationFilter(event);
-        switch (event.httpMethod) {
-            case 'GET':
-                body = await get();
-                break;
-            case 'POST':
-                body = await save(JSON.parse(event.body));
-                break;
-            default:
-                throw new Error(`Unsupported method "${event.httpMethod}"`);
+        switch (event.path) {
+            case '/record':
+                return recordsHandler(event);
+            case '/extract':
+                return extractHandler(event);
         }
     } catch (err) {
-        statusCode = '400';
-        body = err.message;
-    } finally {
-        body = JSON.stringify(body);
+        return {
+            statusCode: 400,
+            body: JSON.stringify(err.message),
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        };
     }
-
-    return {
-        statusCode,
-        body,
-        headers,
-    };
 });

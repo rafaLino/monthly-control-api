@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`toCsv tests should generate a csv file 1`] = `
+"date,id,records
+2024-08,123,"{""incomes"":[{""id"":""1"",""name"":""bonus"",""value"":""100""}],""expenses"":[{""id"":""1"",""name"":""credit card"",""value"":""400""}],""investments"":[{""id"":""1"",""name"":""stock"",""value"":""222""}]}"
+2024-09,245,"{""incomes"":[],""expenses"":[],""investments"":[]}""
+`;
