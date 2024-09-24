@@ -6,11 +6,6 @@ const client = new S3Client({
   region: process.env.AWS_REGION,
 });
 
-function getDate() {
-  const now = new Date();
-  const date = now.toISOString().split("-");
-  return `${date[0]}-${date[1]}`;
-}
 export async function saveAndGetLink(csv) {
   const key = getDate();
   // Save CSV to S3
