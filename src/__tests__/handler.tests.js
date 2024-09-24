@@ -78,7 +78,7 @@ describe("handler tests", () => {
     saveAndGetLink.mockResolvedValueOnce("mylink");
 
     const event = {
-      httpMethod: "GET",
+      httpMethod: "POST",
       path: "/extract",
       headers: { ["x-api-secret"]: SECRET },
     };
