@@ -27,7 +27,7 @@ describe("handler tests", () => {
     const event = {
       httpMethod: "GET",
       path: "/record",
-      headers: { ["x-api-secret"]: SECRET },
+      headers: { "x-api-secret": SECRET },
     };
 
     const result = await handler(event);
@@ -42,7 +42,7 @@ describe("handler tests", () => {
     const event = {
       httpMethod: "POST",
       path: "/record",
-      headers: { ["x-api-secret"]: SECRET },
+      headers: { "x-api-secret": SECRET },
       body: JSON.stringify({ incomes: [], expenses: [], investments: [] }),
     };
     const result = await handler(event);
@@ -80,7 +80,7 @@ describe("handler tests", () => {
     const event = {
       httpMethod: "POST",
       path: "/extract",
-      headers: { ["x-api-secret"]: SECRET },
+      headers: { "x-api-secret": SECRET },
     };
     const result = await handler(event);
 
