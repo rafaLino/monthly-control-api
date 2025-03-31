@@ -30,4 +30,13 @@ describe('getReferenceDate tests', () => {
 
         expect(date).toBe('2024-08')
     })
+
+    test('should get reference from a month with 31 day', () => {
+        jest.useFakeTimers()
+            .setSystemTime(new Date('2025-03-31'));
+
+        const date = getReferenceDate();
+
+        expect(date).toBe('2025-04')
+    })
 })
