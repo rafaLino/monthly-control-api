@@ -31,16 +31,11 @@ export async function scan() {
         TableName: TABLE_NAME
     }
 
-    let results = [];
+    const results = [];
     let lastKey;
 
     do {
-        if (lastKey) {
-            params.ExclusiveStartKey = lastKey;
-        } else {
-            delete params.ExclusiveStartKey;
-        }
-
+        params.ExclusiveStartKey = lastKey;
         const command = new ScanCommand(params);
         const { LastEvaluatedKey, Items } = await client.send(command);
         lastKey = LastEvaluatedKey;

@@ -8,6 +8,7 @@ const client = new S3Client({
 
 export async function saveAndGetLink(csv) {
   const key = getKey();
+
   // Save CSV to S3
   const command = new PutObjectCommand({
     Bucket: process.env.BUCKET_NAME,
@@ -18,7 +19,6 @@ export async function saveAndGetLink(csv) {
   await client.send(command);
 
   // Download the CSV file
-
   return await getSignedLink(key);
 }
 
@@ -34,7 +34,5 @@ async function getSignedLink(key) {
 }
 
 function getKey() {
-  const now = new Date();
-  const date = now.toISOString().split("-");
-  return `${now.getTime()}-${date[0]}-${date[1]}`;
+  return "result"
 }
