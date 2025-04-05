@@ -1,4 +1,4 @@
-import { extract } from "../functions/extract.mjs";
+import { extract, getExtractedDataLink } from "../functions/extract.mjs";
 
 export default async function (event) {
   let body;
@@ -11,6 +11,9 @@ export default async function (event) {
     switch (event.httpMethod) {
       case "POST":
         body = await extract();
+        break;
+      case "GET":
+        body = await getExtractedDataLink();
         break;
       default:
         throw new Error(`Unsupported method "${event.httpMethod}"`);

@@ -1,6 +1,6 @@
 import * as repository from "../repository/index.mjs";
 import { toCsv } from "../utils/index.mjs";
-import { saveAndGetLink } from "../repository/bucket.mjs";
+import { putCsv, getSignedLink } from "../repository/bucket.mjs";
 /**
  * extract registers
  * @returns boolean
@@ -10,7 +10,17 @@ export async function extract() {
 
   const csv = toCsv(result);
 
-  const url = await saveAndGetLink(csv);
+  await putCsv(csv);
+
+  const url = await getSignedLink();
 
   return { ok: !!result, data: url };
 }
+
+
+export async function getExtractedDataLink() {
+  const url = await getSignedLink();
+  return { ok: !!url, data: url }
+}
+
+

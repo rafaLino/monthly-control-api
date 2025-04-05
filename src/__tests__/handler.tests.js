@@ -1,5 +1,5 @@
 import { handler } from "../index.mjs";
-import { saveAndGetLink } from "../repository/bucket.mjs";
+import { getSignedLink, putCsv } from "../repository/bucket.mjs";
 import { get, save, scan } from "../repository/index.mjs";
 
 jest.mock("../repository/index.mjs", () => ({
@@ -9,7 +9,8 @@ jest.mock("../repository/index.mjs", () => ({
 }));
 
 jest.mock("../repository/bucket.mjs", () => ({
-  saveAndGetLink: jest.fn(),
+  putCsv: jest.fn(),
+  getSignedLink: jest.fn(),
 }));
 const SECRET = "myKey";
 describe("handler tests", () => {
@@ -75,7 +76,7 @@ describe("handler tests", () => {
       },
     ];
     scan.mockResolvedValueOnce(data);
-    saveAndGetLink.mockResolvedValueOnce("mylink");
+    getSignedLink.mockResolvedValueOnce("mylink");
 
     const event = {
       httpMethod: "POST",
@@ -88,5 +89,23 @@ describe("handler tests", () => {
     expect(result.body).toBe(JSON.stringify({ ok: true, data: "mylink" }));
     expect(result.statusCode).toBe("200");
     expect(scan).toHaveBeenCalled();
+    expect(putCsv).toHaveBeenCalled();
+    expect(getSignedLink).toHaveBeenCalled();
+  });
+
+  test("should get extracted data link", async () => {
+    getSignedLink.mockResolvedValueOnce("mylink");
+
+    const event = {
+      httpMethod: "GET",
+      path: "/extract",
+      headers: { "x-api-secret": SECRET },
+    };
+    const result = await handler(event);
+
+    expect(result).toBeDefined();
+    expect(result.body).toBe(JSON.stringify({ ok: true, data: "mylink" }));
+    expect(result.statusCode).toBe("200");
+    expect(getSignedLink).toHaveBeenCalled();
   });
 });

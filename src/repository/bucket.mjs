@@ -6,8 +6,7 @@ const client = new S3Client({
   region: process.env.AWS_REGION,
 });
 
-export async function saveAndGetLink(csv) {
-  const key = getKey();
+export async function putCsv(csv, key = getKey()) {
 
   // Save CSV to S3
   const command = new PutObjectCommand({
@@ -17,12 +16,9 @@ export async function saveAndGetLink(csv) {
     ContentType: "text/csv",
   });
   await client.send(command);
-
-  // Download the CSV file
-  return await getSignedLink(key);
 }
 
-async function getSignedLink(key) {
+export async function getSignedLink(key = getKey()) {
   const command = new GetObjectCommand({
     Bucket: process.env.BUCKET_NAME,
     Key: key,
