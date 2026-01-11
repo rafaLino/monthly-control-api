@@ -122,9 +122,8 @@ describe("handler tests", () => {
     get.mockResolvedValueOnce(data);
     const event = {
       httpMethod: "GET",
-      path: "/history",
+      path: "/history/2024-08",
       headers: { "x-api-secret": SECRET },
-      pathParameters: { id: '2024-08' }
     };
 
     const result = await handler(event);

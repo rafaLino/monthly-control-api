@@ -9,7 +9,7 @@ export default async function (event) {
     try {
         switch (event.httpMethod) {
             case "GET":
-                body = await getByRef(event.pathParameters?.id);
+                body = await getByRef(event.params[0]);
                 break;
             default:
                 throw new Error(`Unsupported method "${event.httpMethod}"`);
