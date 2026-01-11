@@ -108,4 +108,30 @@ describe("handler tests", () => {
     expect(result.statusCode).toBe("200");
     expect(getSignedLink).toHaveBeenCalled();
   });
+
+  test('should get history', async () => {
+    const data = {
+      id: "123",
+      records: {
+        incomes: [],
+        expenses: [],
+        investments: [],
+      },
+      date: "2024-08",
+    };
+    get.mockResolvedValueOnce(data);
+    const event = {
+      httpMethod: "GET",
+      path: "/history",
+      headers: { "x-api-secret": SECRET },
+      pathParameters: { id: '2024-08' }
+    };
+
+    const result = await handler(event);
+
+    expect(result).toBeDefined();
+    expect(result.body).toBe(JSON.stringify({ ok: true, data }));
+    expect(result.statusCode).toBe("200");
+    expect(get).toHaveBeenCalled();
+  })
 });

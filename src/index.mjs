@@ -1,6 +1,7 @@
 import { AuthorizationFilter } from "./filters/authorization.filters.mjs";
 import extractHandler from "./handlers/extract.mjs";
 import recordsHandler from "./handlers/records.mjs";
+import historyHandler from "./handlers/history.mjs";
 
 export const handler = async (event) => {
   //console.log('Received event:', JSON.stringify(event, null, 2));
@@ -13,6 +14,8 @@ export const handler = async (event) => {
         return recordsHandler(event);
       case "/extract":
         return extractHandler(event);
+      case "/history":
+        return historyHandler(event);
       default:
         throw new Error(`Unsupported path "${event.path}"`);
     }
