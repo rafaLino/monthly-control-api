@@ -109,7 +109,7 @@ describe("handler tests", () => {
     expect(getSignedLink).toHaveBeenCalled();
   });
 
-  test('should get history', async () => {
+  test("should get history", async () => {
     const data = {
       id: "123",
       records: {
@@ -132,5 +132,67 @@ describe("handler tests", () => {
     expect(result.body).toBe(JSON.stringify({ ok: true, data }));
     expect(result.statusCode).toBe("200");
     expect(get).toHaveBeenCalled();
-  })
+  });
+
+  test("should copy registers when month is closed", async () => {
+    // arrange
+    jest.useFakeTimers().setSystemTime(new Date("2026-01-26T06:00:00.000Z"));
+
+    const data = {
+      id: "123",
+      records: {
+        incomes: [{ id: "1", name: "Bonus", value: 1000 }],
+        expenses: [{ id: "2", name: "Rent", value: 500 }],
+        investments: [{ id: "3", name: "Stocks", value: 200 }],
+      },
+      date: "2026-01",
+    };
+    get.mockResolvedValueOnce(data);
+
+    const event = {
+      httpMethod: "PUT",
+      path: "/record",
+      headers: { "x-api-secret": SECRET },
+    };
+
+    // act
+    const result = await handler(event);
+
+    // assert
+    expect(result).toBeDefined();
+    expect(result.statusCode).toBe("200");
+    expect(result.body).toBe(JSON.stringify({ ok: true }));
+
+    expect(get).toHaveBeenCalled();
+    expect(save).toHaveBeenCalled();
+    expect(save).toHaveBeenCalledWith(
+      expect.objectContaining({
+        id: expect.any(String),
+        date: "2026-02",
+        records: data.records,
+      }),
+    );
+
+    jest.useRealTimers();
+  });
+
+  test("should do not copy registers when month is opened", async () => {
+    // arrange
+    jest.useFakeTimers().setSystemTime(new Date("2026-01-20T06:00:00.000Z"));
+
+    const event = {
+      httpMethod: "PUT",
+      path: "/record",
+      headers: { "x-api-secret": SECRET },
+    };
+
+    // act
+    const result = await handler(event);
+
+    // assert
+    expect(result).toBeDefined();
+    expect(result.body).toBe(JSON.stringify({ ok: false }));
+
+    jest.useRealTimers();
+  });
 });

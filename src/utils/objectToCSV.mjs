@@ -1,4 +1,10 @@
-export const objectToCSV = (arr, headers = extractHeaders(arr), omitHeaders = false) => {
+export function toCsv(data) {
+  if (!data || !Array.isArray(data) || data.length < 1) return null;
+
+  return objectToCSV(data);
+}
+
+const objectToCSV = (arr, headers = extractHeaders(arr), omitHeaders = false) => {
   const headerRow = serializeRow(headers);
   const bodyRows = arr.map((obj) => serializeRow(headers.map((key) => obj[key])));
   return omitHeaders ? bodyRows.join("\n") : [headerRow, ...bodyRows].join("\n");

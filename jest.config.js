@@ -9,7 +9,7 @@ const config = {
   setupFiles: ["<rootDir>/jest/setEnv.js"],
   coverageProvider: "v8",
   transform: {
-    '^.+\\.(js|mjs)$': 'babel-jest',
+    "^.+\\.(js|mjs)$": "babel-jest",
   },
 };
 

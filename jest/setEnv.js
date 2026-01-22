@@ -1,1 +1,1 @@
-process.env.API_KEY = "myKey"
+process.env.API_KEY = "myKey";

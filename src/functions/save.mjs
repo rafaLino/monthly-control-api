@@ -1,28 +1,27 @@
-import * as repository from '../repository/index.mjs'
-import { getReferenceDate } from '../utils/index.mjs';
-import crypto from 'crypto';
+import * as repository from "../repository/index.mjs";
+import { getReferenceDate } from "../utils/index.mjs";
+import crypto from "node:crypto";
 /**
  * save register's into database
- * @param {{ 
+ * @param {{
  *  incomes: Array<{id: string, name: string}>;
  *  expenses:Array<{id: string, name: string}>;
  *  investments: Array<id: string, name: string>}} data
- * 
+ *
  * @returns boolean
  */
 export async function save(data) {
-    if (!data)
-        return { ok: false };
+  if (!data) return { ok: false };
 
-    const currentDate = getReferenceDate();
+  const currentDate = getReferenceDate();
 
-    const existedData = await repository.get(currentDate);
-    const id = existedData ? existedData.id : crypto.randomUUID();
-    await repository.save({
-        id,
-        records: data,
-        date: currentDate
-    });
+  const existedData = await repository.get(currentDate);
+  const id = existedData ? existedData.id : crypto.randomUUID();
+  await repository.save({
+    id,
+    records: data,
+    date: currentDate,
+  });
 
-    return { ok: true };
+  return { ok: true };
 }

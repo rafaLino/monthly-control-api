@@ -1,4 +1,5 @@
-export { get } from './get.mjs';
-export { save } from './save.mjs';
-export { extract, getExtractedDataLink } from './extract.mjs';
-export { getByRef } from './getByRef.mjs';
+export * from "./get.mjs";
+export * from "./save.mjs";
+export * from "./extract.mjs";
+export * from "./getByRef.mjs";
+export * from "./copy.mjs";

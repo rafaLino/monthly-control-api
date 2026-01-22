@@ -1,4 +1,4 @@
-import { get, save } from "../functions/index.mjs";
+import { get, save, copy } from "../functions/index.mjs";
 
 export default async function (event) {
   //console.log('Received event:', JSON.stringify(event, null, 2));
@@ -14,6 +14,9 @@ export default async function (event) {
         break;
       case "POST":
         body = await save(JSON.parse(event.body));
+        break;
+      case "PUT":
+        body = await copy();
         break;
       default:
         throw new Error(`Unsupported method "${event.httpMethod}"`);

@@ -7,7 +7,6 @@ const client = new S3Client({
 });
 
 export async function putCsv(csv, key = getKey()) {
-
   // Save CSV to S3
   const command = new PutObjectCommand({
     Bucket: process.env.BUCKET_NAME,
@@ -30,5 +29,5 @@ export async function getSignedLink(key = getKey()) {
 }
 
 function getKey() {
-  return "result"
+  return "result";
 }

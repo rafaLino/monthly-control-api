@@ -17,10 +17,7 @@ export async function extract() {
   return { ok: !!result, data: url };
 }
 
-
 export async function getExtractedDataLink() {
   const url = await getSignedLink();
-  return { ok: !!url, data: url }
+  return { ok: !!url, data: url };
 }
-
-

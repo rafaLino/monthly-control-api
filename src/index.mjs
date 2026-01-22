@@ -32,7 +32,7 @@ export const handler = async (event) => {
 function prepareEvent(event) {
   event.httpMethod ??= event.requestContext.http.method;
   event.path ??= event.requestContext.http.path;
-  const segments = event.path.split('/').filter(Boolean);
+  const segments = event.path.split("/").filter(Boolean);
   event.route = segments.at(0);
   event.params = segments.slice(1);
 }

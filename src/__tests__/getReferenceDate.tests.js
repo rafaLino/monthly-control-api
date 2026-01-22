@@ -1,42 +1,38 @@
-import { getReferenceDate } from "../utils/index.mjs"
+import { getReferenceDate } from "../utils/index.mjs";
 
-describe('getReferenceDate tests', () => {
-    afterEach(() => {
-        jest.useRealTimers();
-    })
-    test('should get reference date given a day within the limit', () => {
-        jest.useFakeTimers()
-            .setSystemTime(new Date('2024-08-20'));
+describe("getReferenceDate tests", () => {
+  afterEach(() => {
+    jest.useRealTimers();
+  });
+  test("should get reference date given a day within the limit", () => {
+    jest.useFakeTimers().setSystemTime(new Date("2024-08-20"));
 
-        const date = getReferenceDate(20);
+    const date = getReferenceDate(20);
 
-        expect(date).toBe('2024-08')
-    })
+    expect(date).toBe("2024-08");
+  });
 
-    test('should get reference date given a day outside the limit', () => {
-        jest.useFakeTimers()
-            .setSystemTime(new Date('2024-08-26T06:00:00.000Z'));
+  test("should get reference date given a day outside the limit", () => {
+    jest.useFakeTimers().setSystemTime(new Date("2024-08-26T06:00:00.000Z"));
 
-        const date = getReferenceDate(25);
+    const date = getReferenceDate(25);
 
-        expect(date).toBe('2024-09')
-    })
+    expect(date).toBe("2024-09");
+  });
 
-    test('should get reference date using the default limit', () => {
-        jest.useFakeTimers()
-            .setSystemTime(new Date('2024-08-25'));
+  test("should get reference date using the default limit", () => {
+    jest.useFakeTimers().setSystemTime(new Date("2024-08-25"));
 
-        const date = getReferenceDate();
+    const date = getReferenceDate();
 
-        expect(date).toBe('2024-08')
-    })
+    expect(date).toBe("2024-08");
+  });
 
-    test('should get reference from a month with 31 day', () => {
-        jest.useFakeTimers()
-            .setSystemTime(new Date('2025-03-31'));
+  test("should get reference from a month with 31 day", () => {
+    jest.useFakeTimers().setSystemTime(new Date("2025-03-31"));
 
-        const date = getReferenceDate();
+    const date = getReferenceDate();
 
-        expect(date).toBe('2025-04')
-    })
-})
+    expect(date).toBe("2025-04");
+  });
+});
